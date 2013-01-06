@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+"""
+Draw a graph with matplotlib, color edges.
+You must have matplotlib>=87.7 for this to work.
+"""
+__author__ = """Aric Hagberg (hagberg@lanl.gov)"""
+import matplotlib.pyplot as plt
+import networkx as nx
+n = 5;
+G=nx.star_graph(n)
+pos=nx.spring_layout(G)
+edges = G.edges()
+print(edges)
+for i in pos:
+    print(i, pos[i])
+colors=range(n)
+plt.figure(figsize=(8,8))
+nx.draw(G,pos,node_color='#A0CBE2',edge_color=colors,width=4,edge_cmap=plt.cm.Blues,with_labels=False)
+plt.xlim(-0.1, 1.1)
+plt.ylim(-0.1, 1.1)
+plt.axis('normal')
+plt.savefig("edge_colormap.png") # save as png
+plt.show() # display
