@@ -6,6 +6,7 @@ You must have matplotlib>=87.7 for this to work.
 
 """backup I store some functions that might be useful here
 plt.show() # display the picture in a window  attention that this will block the process, if you want to continue, close it.
+plt.clf() #clear the image
 """
 
 import matplotlib.pyplot as plt
@@ -39,6 +40,17 @@ def get_pairing(G, edges):
             nodes.remove(x)
             nodes.remove(y)
     
+def get_clustering(G, edges):
+    nodes = G.nodes()
+    masters = [];
+    for (x, y) in edges:
+        if ((x in nodes) and (y in nodes)) or ((x in nodes) and (y in masters)):
+            G.add_edge(x, y)
+            nodes.remove(x)
+            if (y in nodes):
+                nodes.remove(y)
+            masters.append(y)
+    
 n = 20;
 edge_thres = 0.15;
 G = nx.star_graph(n)
@@ -62,5 +74,7 @@ remove_all_edges(DG)
 get_pairing(DG, edges)
 drawGraph(DG, pos)
 savePicture()
-plt.clf() #clear the image
+remove_all_edges(DG)
+get_clustering(DG, edges)
+drawGraph(DG, pos)
 savePicture()
